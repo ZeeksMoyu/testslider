@@ -1,95 +1,42 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+
+import Lightbox from "yet-another-react-lightbox";
+import React, {useState} from "react";
+import {slides} from "@/talons/data";
+import "yet-another-react-lightbox/styles.css";
+import {Captions, Counter, Download, Thumbnails, Zoom} from "yet-another-react-lightbox/plugins";
+import "yet-another-react-lightbox/plugins/captions.css";
+import "yet-another-react-lightbox/plugins/counter.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+import Images from "@/components/Images/Images";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    // const [open, setOpen] = React.useState<boolean>(false)
+    const zoomRef = React.useRef(null);
+    const [index, setIndex] = React.useState<number>(-1)
+    const [maxZoomPixelRatio, setMaxZoomPixelRatio] = React.useState(3);
+
+  return (
+    <>
+        {/*<button onClick={() => setOpen(true)}>Open</button>*/}
+        <Images data={slides} onClick={(currentIndex) => setIndex(currentIndex)}/>
+        <Lightbox
+            plugins={[Captions, Counter, Download, Zoom, Thumbnails]}
+            counter={{ container: { style: { top: "unset", bottom: 0 } } }}
+            zoom={{ ref: zoomRef, maxZoomPixelRatio }}
+
+            captions={{
+                showToggle: true,
+                descriptionTextAlign: 'end'
+            }}
+            slides={slides}
+            index={index}
+            open={index >= 0}
+            close={() => setIndex(-1)}
+            // open={open}
+            // close={() => setOpen(false)}
+        />
+    </>
   );
 }
