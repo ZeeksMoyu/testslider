@@ -1,7 +1,7 @@
 'use client'
 
 import Lightbox from "yet-another-react-lightbox";
-import React, {useState} from "react";
+import React from "react";
 import {slides} from "@/talons/data";
 import "yet-another-react-lightbox/styles.css";
 import {Captions, Counter, Download, Thumbnails, Zoom} from "yet-another-react-lightbox/plugins";
@@ -15,7 +15,7 @@ export default function Home() {
     // const [open, setOpen] = React.useState<boolean>(false)
     const zoomRef = React.useRef(null);
     const [index, setIndex] = React.useState<number>(-1)
-    const [maxZoomPixelRatio, setMaxZoomPixelRatio] = React.useState(3);
+    const maxZoomPixelRatio = 3;
 
   return (
     <>
